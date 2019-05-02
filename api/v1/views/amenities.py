@@ -11,9 +11,9 @@ import json
 
 
 @app_views.route("/amenities", methods=["GET", "POST"],
-                  strict_slashes=False)
+                 strict_slashes=False)
 def amenity_list():
-    """ GET: Render a list of amenities 
+    """ GET: Render a list of amenities
     """
     if request.method == "POST":
         new_dict = request.get_json(silent=True)
@@ -27,7 +27,7 @@ def amenity_list():
         storage.close()
         return jsonify(new_amenity.to_dict()), 201
     amenities = storage.all(Amenity)
-    amenities_list = [amenity.to_dict() for amenity in amenities.values()] 
+    amenities_list = [amenity.to_dict() for amenity in amenities.values()]
     return jsonify(amenities_list)
 
 
