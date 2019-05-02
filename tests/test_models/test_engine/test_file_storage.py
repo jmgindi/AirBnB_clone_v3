@@ -126,6 +126,7 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
+    """ Get method """
     @unittest.skipIf(models.storage_t == 'db', "testing fs storage")
     def test_get(self):
         """ Returns an object when passing in a model """
@@ -138,10 +139,10 @@ class TestFileStorage(unittest.TestCase):
             models.storage.new(self.new_obj)
             models.storage.save()
             ret_obj = models.storage.get(User, "12345")
- 
+
     @unittest.skipIf(models.storage_t == 'db', "testing fs storage")
     def test_get_string_cls(self):
-        """ Pass in a string class """
+        """ Returns an object when passing in a string class """
         obj = models.storage.all()
         try:
             del_obj = obj['User.12345']
@@ -165,6 +166,7 @@ class TestFileStorage(unittest.TestCase):
         get_obj = models.storage.get(User, None)
         self.assertIsNone(get_obj)
 
+    """ Count tests """
 
     @unittest.skipIf(models.storage_t == 'db', "Testing fs storage")
     def test_count_all(self):
@@ -184,7 +186,7 @@ class TestFileStorage(unittest.TestCase):
     def test_count_substring_cls(self):
         """ Pass in an substring of a class  """
         res = models.storage.count("St")
-        self.assertIsNone(res)
+        self.assertEqual(res, 0)
 
     @unittest.skipIf(models.storage_t == 'db', "Testing fs storage")
     def test_count_pass_model_cls(self):
