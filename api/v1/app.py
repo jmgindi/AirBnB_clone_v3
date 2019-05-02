@@ -17,14 +17,14 @@ def teardown(exception):
     storage.close()
 
 @app.errorhandler(404)
-def page_not_found(e):
+def abort(e):
     """ returns 404 template on 404 code status """
     return jsonify({"error": "Not found"}), 404
 
 if __name__ == "__main__":
     host = environ.get('HBNB_API_HOST', '0.0.0.0')
     port = int(environ.get('HBNB_API_PORT', 5000))
-    app.register_error_handler(404, page_not_found)
+    app.register_error_handler(404, abort)
     app.run(
         host=host,
         port=port,
