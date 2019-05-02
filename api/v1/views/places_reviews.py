@@ -11,9 +11,9 @@ import json
 @app_views.route("/places/<place_id>/reviews",
                  methods=["GET", "POST"],
                  strict_slashes=False)
-def amenity_list(place_id):
-    """ GET: render a list of cities
-        POST: Create a city
+def review_list(place_id):
+    """ GET: render a list of reviews
+        POST: Create a review
     """
     place = storage.get("Place", place_id)
     if not place:

@@ -43,9 +43,9 @@ def places_city_get(city_id):
                  methods=["GET", "DELETE", "PUT"],
                  strict_slashes=False)
 def place_detail(place_id):
-    """ GET: Return a json of a city detail
+    """ GET: Return a json of a place detail
         DELETE: Deltes an object and returns an empty json dictionary
-        PUT: Updates a city
+        PUT: Updates a place
     """
     place = storage.get(Place, place_id)
     if not place:
