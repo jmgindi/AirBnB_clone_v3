@@ -20,7 +20,7 @@ def places_city_get(city_id):
     if not city:
         abort(404)
     if request.method == "POST":
-        new_dict = request.get_json(silent=True):
+        new_dict = request.get_json(silent=True)
         if not new_dict:
             return jsonify({"error": "Not a JSON"}), 400
         if "name" not in request.json:

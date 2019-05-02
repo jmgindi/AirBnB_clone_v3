@@ -19,7 +19,7 @@ def amenity_list(place_id):
     if not place:
         abort(404)
     if request.method == "POST":
-        new_dict = request.get_json(silent=True):
+        new_dict = request.get_json(silent=True)
         if not new_dict:
             return jsonify({"error": "Not a JSON"}), 400
         if "text" not in request.json:
