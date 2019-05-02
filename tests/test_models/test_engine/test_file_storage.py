@@ -9,6 +9,7 @@ import models
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
+from models.state import State
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -127,7 +128,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "testing fs storage")
     def test_get(self):
-        """ Returns an object """
+        """ Returns an object when passing in a model """
         obj = models.storage.all()
         try:
             del_obj = obj['User.12345']
@@ -137,21 +138,56 @@ class TestFileStorage(unittest.TestCase):
             models.storage.new(self.new_obj)
             models.storage.save()
             ret_obj = models.storage.get(User, "12345")
+ 
+    @unittest.skipIf(models.storage_t == 'db', "testing fs storage")
+    def test_get_string_cls(self):
+        """ Pass in a string class """
+        obj = models.storage.all()
+        try:
+            del_obj = obj['User.12345']
+            models.storage.delete(del_obj)
+            models.storage.save()
+        except:
+            models.storage.new(self.new_obj)
+            models.storage.save()
+            ret_obj = models.storage.get("User", "12345")
             self.assertEqual(ret_obj, self.new_obj)
 
     @unittest.skipIf(models.storage_t == 'db', "testing fs storage")
     def test_get_returns_nothing(self):
+        """ Returns None when passing in a invalid id """
         get_obj = models.storage.get(User, "0000")
         self.assertIsNone(get_obj)
 
+    @unittest.skipIf(models.storage_t == 'db', "testing fs storage")
+    def test_get_pass_none(self):
+        """ Returns None when passing in None type """
+        get_obj = models.storage.get(User, None)
+        self.assertIsNone(get_obj)
+
+
     @unittest.skipIf(models.storage_t == 'db', "Testing fs storage")
     def test_count_all(self):
+        """ Counts all objects in the storage """
         original_len = len(models.storage.all())
         method_count_len = models.storage.count()
         self.assertEqual(original_len, method_count_len)
 
     @unittest.skipIf(models.storage_t == 'db', "Testing fs storage")
     def test_count_cls(self):
+        """ Counts specific classes """
         original_len = len(models.storage.all("User"))
         method_count_len = models.storage.count("User")
         self.assertEqual(original_len, method_count_len)
+
+    @unittest.skipIf(models.storage_t == 'db', "Testing fs storage")
+    def test_count_substring_cls(self):
+        """ Pass in an substring of a class  """
+        res = models.storage.count("St")
+        self.assertIsNone(res)
+
+    @unittest.skipIf(models.storage_t == 'db', "Testing fs storage")
+    def test_count_pass_model_cls(self):
+        """ Pass in the model """
+        original_len = len(models.storage.all(State))
+        method_count_len = models.storage.count(State)
