@@ -60,7 +60,11 @@ def place_detail(place_id):
         if not new_dict:
             return jsonify({"error": "Not a JSON"}), 400
         for k, v in new_dict.items():
-            if k not in ["id", "city_id", "created_at", "updated_at"]:
+            if k not in ["id",
+                         "user_id",
+                         "city_id",
+                         "created_at",
+                         "updated_at"]:
                 setattr(place, k, v)
         storage.new(place)
         storage.save()
