@@ -87,6 +87,7 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
+    """ Test get method """
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """ Returns an object """
@@ -109,10 +110,37 @@ class TestFileStorage(unittest.TestCase):
             self.assertEqual(ret_obj, new_obj)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_string_cls(self):
+        """ Returns an object """
+        new_obj = User(
+                id="12345",
+                first_name="shoji",
+                last_name="takashima",
+                email="email@ya.com",
+                password="hi"
+                )
+        obj = models.storage.all()
+        try:
+            del_obj = obj['User.12345']
+            models.storage.delete(del_obj)
+            models.storage.save()
+        except:
+            models.storage.new(new_obj)
+            models.storage.save()
+            ret_obj = models.storage.get("User", "12345")
+            self.assertEqual(ret_obj, new_obj)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_returns_nothing(self):
         get_obj = models.storage.get(User, "0000")
         self.assertIsNone(get_obj)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_returns_nothing(self):
+        get_obj = models.storage.get(User, None)
+        self.assertIsNone(get_obj)
+
+    """ Test Count method """
     @unittest.skipIf(models.storage_t != 'db', "Testing db storage")
     def test_count_all(self):
         original_len = len(models.storage.all())
@@ -122,5 +150,18 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "Testing db storage")
     def test_count_cls(self):
         original_len = len(models.storage.all("User"))
+        method_count_len = models.storage.count(User)
+        self.assertEqual(original_len, method_count_len)
+
+    @unittest.skipIf(models.storage_t != 'db', "Testing db storage")
+    def test_count_string_cls(self):
+        """ pass in a string instead of a cls """
+        original_len = len(models.storage.all("User"))
         method_count_len = models.storage.count("User")
         self.assertEqual(original_len, method_count_len)
+
+    @unittest.skipIf(models.storage_t != 'db', "Testing db storage")
+    def test_count_substring_cls(self):
+        """ Pass in an substring of a class  """
+        res = models.storage.count("St")
+        self.assertEqual(res, 0)
