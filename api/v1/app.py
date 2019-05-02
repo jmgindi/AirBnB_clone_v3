@@ -2,6 +2,7 @@
 """Flask app file v1"""
 
 from flask import Flask, Blueprint, jsonify
+from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
 from os import environ
@@ -10,6 +11,8 @@ from os import environ
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views, url="/app_views")
+CORS(app)
+cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
