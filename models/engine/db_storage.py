@@ -88,5 +88,9 @@ class DBStorage:
         if not cls:
             return len(self.all())
         else:
-            return len(
-                [v for v in self.all().values() if type(v) is cls])
+            if isinstance(cls, str):
+                try:
+                    cls = classes[cls]
+                except:
+                    return 0
+            return len([v for v in self.all().values() if type(v) is cls])

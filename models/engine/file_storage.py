@@ -82,5 +82,9 @@ class FileStorage:
         if not cls:
             return len(self.__objects)
         else:
-            return len(
-                [v for v in self.__objects.values() if type(v) is cls])
+            if isinstance(cls, str):
+                try:
+                    cls = classes[cls]
+                except:
+                    return 0
+        return len([v for v in self.__objects.values() if type(v) is cls])
