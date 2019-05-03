@@ -132,23 +132,27 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_returns_nothing(self):
+        """test get returning None on bad id"""
         get_obj = models.storage.get(User, "0000")
         self.assertIsNone(get_obj)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_returns_nothing(self):
+        """test None returns None for get"""
         get_obj = models.storage.get(User, None)
         self.assertIsNone(get_obj)
 
     """ Test Count method """
     @unittest.skipIf(models.storage_t != 'db', "Testing db storage")
     def test_count_all(self):
+        """test count all objects"""
         original_len = len(models.storage.all())
         method_count_len = models.storage.count()
         self.assertEqual(original_len, method_count_len)
 
     @unittest.skipIf(models.storage_t != 'db', "Testing db storage")
     def test_count_cls(self):
+        """tests count on a specific class"""
         original_len = len(models.storage.all("User"))
         method_count_len = models.storage.count(User)
         self.assertEqual(original_len, method_count_len)
