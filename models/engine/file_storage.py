@@ -71,6 +71,11 @@ class FileStorage:
 
     def get(self, cls, id):
         """gets a single instance of an object"""
+        if isinstance(cls, str):
+            try:
+                cls = classes[cls]
+            except:
+                return 0
         obj_id = "{}.{}".format(cls.__name__, id)
         if obj_id in self.__objects.keys():
             return self.__objects[obj_id]
