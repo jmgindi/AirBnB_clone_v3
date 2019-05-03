@@ -34,7 +34,7 @@ def review_list(place_id):
         storage.new(review)
         storage.save()
         storage.close()
-        return jsonify(place.to_dict()), 201
+        return jsonify(review.to_dict()), 201
     reviews = [review.to_dict() for review in place.reviews]
     return jsonify(reviews)
 
@@ -47,7 +47,7 @@ def review_detail(review_id):
         DELETE: Deltes an object and returns an empty json dictionary
         PUT: Updates a review
     """
-    review = storage.get("Review", review_id)
+    review = storage.get(Review, review_id)
     if not review:
         abort(404)
     if request.method == "DELETE":
