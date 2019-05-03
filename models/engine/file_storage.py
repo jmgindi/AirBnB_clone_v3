@@ -83,5 +83,4 @@ class FileStorage:
             return len(self.__objects)
         else:
             return len(
-                [k for k in self.__objects.keys() if cls in k and
-                 k in classes.keys()])
+                [v for v in self.__objects.values() if type(v) is cls])
