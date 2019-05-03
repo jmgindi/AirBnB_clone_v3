@@ -26,7 +26,7 @@ def review_list(place_id):
             return jsonify({"error": "Missing text"}), 400
         if "user_id" not in request.json:
             return jsonify({"error": "Missing user_id"}), 400
-        if new_dict["user_id"] not in storage.get("User", user_id):
+        if not storage.get("User", new_dict["user_id"]):
             abort(404)
         new_dict["place_id"] = place_id
         review = Review(**new_dict)
