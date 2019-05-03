@@ -136,9 +136,10 @@ class TestFileStorage(unittest.TestCase):
             models.storage.delete(del_obj)
             models.storage.save()
         except:
-            models.storage.new(self.new_obj)
-            models.storage.save()
-            ret_obj = models.storage.get(User, "12345")
+            pass
+        models.storage.new(self.new_obj)
+        models.storage.save()
+        ret_obj = models.storage.get(User, "12345")
 
     @unittest.skipIf(models.storage_t == 'db', "testing fs storage")
     def test_get_string_cls(self):
@@ -149,10 +150,11 @@ class TestFileStorage(unittest.TestCase):
             models.storage.delete(del_obj)
             models.storage.save()
         except:
-            models.storage.new(self.new_obj)
-            models.storage.save()
-            ret_obj = models.storage.get("User", "12345")
-            self.assertEqual(ret_obj, self.new_obj)
+            pass
+        models.storage.new(self.new_obj)
+        models.storage.save()
+        ret_obj = models.storage.get("User", "12345")
+        self.assertEqual(ret_obj, self.new_obj)
 
     @unittest.skipIf(models.storage_t == 'db', "testing fs storage")
     def test_get_returns_nothing(self):
@@ -176,7 +178,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(original_len, method_count_len)
 
     @unittest.skipIf(models.storage_t == 'db', "Testing fs storage")
-    def test_count_cls(self):
+    def test_count_string_cls(self):
         """ Counts specific classes """
         original_len = len(models.storage.all("User"))
         method_count_len = models.storage.count("User")

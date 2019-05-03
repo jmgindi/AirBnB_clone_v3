@@ -104,10 +104,11 @@ class TestFileStorage(unittest.TestCase):
             models.storage.delete(del_obj)
             models.storage.save()
         except:
-            models.storage.new(new_obj)
-            models.storage.save()
-            ret_obj = models.storage.get(User, "12345")
-            self.assertEqual(ret_obj, new_obj)
+            pass
+        models.storage.new(new_obj)
+        models.storage.save()
+        ret_obj = models.storage.get(User, "12345")
+        self.assertEqual(ret_obj, new_obj)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_string_cls(self):
@@ -125,10 +126,11 @@ class TestFileStorage(unittest.TestCase):
             models.storage.delete(del_obj)
             models.storage.save()
         except:
-            models.storage.new(new_obj)
-            models.storage.save()
-            ret_obj = models.storage.get("User", "12345")
-            self.assertEqual(ret_obj, new_obj)
+            pass
+        models.storage.new(new_obj)
+        models.storage.save()
+        ret_obj = models.storage.get("User", "12345")
+        self.assertEqual(ret_obj, new_obj)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_returns_nothing(self):
